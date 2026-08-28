@@ -34,6 +34,7 @@ app=FastAPI()
 
 #dynamic router
 
-@app.get("/user")
-def user(name):
-    return {"name":name}
+@app.get("/user/{user_ide}")
+def get_user(user_ide):
+    return {"user_ide":user_ide}
+
