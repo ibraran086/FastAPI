@@ -38,3 +38,22 @@ app=FastAPI()
 def get_user(user_ide):
     return {"user_ide":user_ide}
 
+from fastapi import FastAPI
+app=FastAPI()
+
+#query params
+
+@app.get("/user")
+def get_user(name:str):
+    return {"name":name}
+
+@app.get("/products")
+def get_pro(limit:int=10):
+    return {"limit":limit}
+
+@app.get("/items")
+def get_items(name:str=None,price:int=0):
+    return {
+        "name":name,
+        "price":price
+    }
