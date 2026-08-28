@@ -14,3 +14,26 @@ app=FastAPI()
 @app.get("/")
 def home():
     return {"message":"my new website."}
+#about router
+@app.get("/about")
+def about(name,age,designation):
+    return {
+        "name":name,
+        "age":age,
+        "Designation":designation
+    }
+
+#user router
+
+@app.get("/user")
+def user(user_name):
+    return user_name
+
+from fastapi import FastAPI
+app=FastAPI()
+
+#dynamic router
+
+@app.get("/user")
+def user(name):
+    return {"name":name}
