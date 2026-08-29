@@ -84,3 +84,28 @@ def get_user(name:str,age:int):
         "name":name,
         "age":age
     }
+
+#real example
+from fastapi import FastAPI
+app=FastAPI()
+
+@app.post("/create_user")
+def create_user(user:dict):
+    return {
+        "message":"user created",
+        "data":user
+    }
+#pydantic
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+class person(BaseModel):
+    name:str
+    age:int
+app=FastAPI()
+@app.post("/user")
+def user(data:person):
+    return {
+        "message":"hello",
+        "data":data
+    }
