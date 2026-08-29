@@ -57,3 +57,18 @@ def get_items(name:str=None,price:int=0):
         "name":name,
         "price":price
     }
+
+from fastapi import FastAPI
+app=FastAPI()
+
+#quary params
+@app.get("/user")
+def user(person:str):
+    return {"person":person}
+
+@app.get("/users")
+def users(name:str=None,limit:int=0):
+    return {
+        "name":name,
+        "limit":limit
+    }
