@@ -72,3 +72,15 @@ def users(name:str=None,limit:int=0):
         "name":name,
         "limit":limit
     }
+
+#POSTAPI
+
+from fastapi import FastAPI
+app=FastAPI()
+
+@app.post("/user")
+def get_user(name:str,age:int):
+    return {
+        "name":name,
+        "age":age
+    }
