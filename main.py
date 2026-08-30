@@ -109,3 +109,16 @@ def user(data:person):
         "message":"hello",
         "data":data
     }
+
+from fastapi import FastAPI
+from pydantic import BaseModel
+class user(BaseModel):
+    name:str
+    age:int
+app=FastAPI()
+@app.post("/data")
+def get_data(data:user):
+    return {
+        "message":"hello pydantic",
+        "data":data
+    }
