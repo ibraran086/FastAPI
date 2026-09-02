@@ -195,3 +195,20 @@ class company(BaseModel):
 @app.post("/create_user")
 def create_user(data:user):
     return data
+
+from fastapi import FastAPI
+from pydantic import BaseModel
+app=FastAPI()
+todos=[]
+class  Todo(BaseModel):
+    ide:int
+    title:str
+    complete:bool
+
+@app.post("/todos")
+def fun(todo:Todo):
+    todos.append(todo)
+    return {"message":"todo added","data":todo}
+@app.get("/todos")
+def get_todos():
+    return todos 
