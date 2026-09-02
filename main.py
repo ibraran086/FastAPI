@@ -139,3 +139,26 @@ def create_user(user:user):
         "message":"hi user",
         "data":user
     }
+from fastapi import FastAPI
+app=FastAPI()
+#home router
+@app.get("/")
+def home():
+    return {"message":"hello fastapi"}
+
+from fastapi import FastAPI
+app=FastAPI()
+#about router
+@app.get("/about")
+def about():
+    return {
+        "name":"Ibrar Munir",
+        "age":26,
+        "data":True
+    }
+from fastapi import FastAPI
+app=FastAPI()
+#user router
+@app.get("/user/{user_ide}")
+def user_ide(user_ide):
+    return ("user",user_ide)
