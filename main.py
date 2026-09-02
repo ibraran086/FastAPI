@@ -162,3 +162,13 @@ app=FastAPI()
 @app.get("/user/{user_ide}")
 def user_ide(user_ide):
     return ("user",user_ide)
+from fastapi import FastAPI
+app=FastAPI()
+#query parameters
+@app.get("/create_user")
+def create(name:str,age=None,weight=None):
+    return {
+        "name":name,
+        "age":age,
+        "weight":weight
+    }
