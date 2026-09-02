@@ -181,3 +181,17 @@ def post(name:str=None,limit:int=10):
         "name":name,
         "limit":limit
     }
+#real example
+from fastapi import FastAPI
+from pydantic import BaseModel
+class user(BaseModel):
+    name:str
+    age:int
+    email:int
+    company:company
+class company(BaseModel):
+    name:str
+    address:str
+@app.post("/create_user")
+def create_user(data:user):
+    return data
