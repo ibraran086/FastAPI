@@ -172,3 +172,12 @@ def create(name:str,age=None,weight=None):
         "age":age,
         "weight":weight
     }
+from fastapi import FastAPI
+app=FastAPI()
+#post request
+@app.post("/user")
+def post(name:str=None,limit:int=10):
+    return {
+        "name":name,
+        "limit":limit
+    }
