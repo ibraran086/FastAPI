@@ -212,3 +212,71 @@ def fun(todo:Todo):
 @app.get("/todos")
 def get_todos():
     return todos 
+
+from fastapi import FastAPI
+from pydantic import BaseModel
+class informatoin(BaseModel):
+    name:str
+    age:int
+    data:bool
+    address:address
+class address(BaseModel):
+    email:str
+    address:str
+app=FastAPI()
+@app.post("/create_user")
+def get_user(user:informatoin):
+    return {
+        "message":"hello fastapi",
+        "data":user
+    }
+
+@app.get("/create_user")
+def get_user(user:informatoin):
+    return user
+
+
+from fastapi import FastAPI
+from pydantic import BaseModel
+app=FastAPI()
+todos=[]
+class Todo(BaseModel):
+    id:int
+    title:str
+    completed:bool
+@app.post("/todos")
+def create_todo(todo:Todo):
+    todos.append(todo)
+    return {"message":"TODO added","data":todo}
+@app.get("/todos")
+def get_todos():
+    return todos
+@app.get("/todos/{todo_id}")
+def get_todo(todo_id:int):
+    for todo in todos:
+        if todo.id==todo_id:
+            return todo
+    return {"error":"Todo not found"}
+
+from fastapi import FastAPI
+from pydantic import BaseModel
+app=FastAPI()
+ALI_KARYANA=[]
+class shop(BaseModel):
+    id:int
+    customer_name:str
+    credit:int
+    data:bool
+@app.post("/user")
+def get_customer(ali_karyana:shop):
+    ALI_KARYANA.append(ali_karyana)
+    return {"message":"your remain credit is","data":ALI_KARYANA}
+@app.get("/user")
+def customer_id():
+    return ALI_KARYANA
+@app.get("/user/{user_id}")
+def data(user_id:int):
+    for search in ALI_KARYANA:
+        if search.id==user_id:
+            return search
+    return {"message":"error not found"}
