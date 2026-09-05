@@ -280,3 +280,42 @@ def data(user_id:int):
         if search.id==user_id:
             return search
     return {"message":"error not found"}
+@app.put("/user/{user_id}")
+def update_data(user_id:int,updated_data:shop):
+    for index,shop in enumerate(ALI_KARYANA):
+        if shop.id==user_id:
+            ALI_KARYANA[index]=update_data
+            return {
+                "message":"data updated"
+            }
+    return {"message":"your remain credit is","data":ALI_KARYANA}
+
+from fastapi import FastAPI
+from pydantic import BaseModel
+class Todo(BaseModel):
+    id:int
+    name:str
+    credit:int
+todos=[]
+app=FastAPI()
+@app.post("/user")
+def create_todo(todo:Todo):
+    todos.append(todo)
+    return {
+        "message":"your todo is created",
+        "data":todo
+    }
+@app.get("/user")
+def get_user():
+    return todos
+@app.get("/user/{user_id}")
+def check(user_id:int):
+    for todo in todos:
+        if todo.id==user_id:
+
+            return todo
+    return {"message":"todo not found"}
+@app.put("/user/{user_id}")
+def update(user_id:int,update:Todo):
+    for index,todo in enumerate(todos):
+        if todo.id==user_id:
