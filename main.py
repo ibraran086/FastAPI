@@ -326,6 +326,7 @@ def update(user_id:int,update:Todo):
 from fastapi import FastAPI
 from pydantic import BaseModel
 class self(BaseModel):
+    id:int
     name:str
     age:int
 intro=[]
@@ -337,3 +338,10 @@ def create_user(user:self):
 @app.get("/data")
 def get_data():
     return intro
+@app.put("/data/{data_id}")
+def put_data(data_id:int,update:self):
+    for index,data in enumerate(intro):
+        if data.id==data_id:
+            intro[index]=update
+            return update
+    return {"message":"not update"}
