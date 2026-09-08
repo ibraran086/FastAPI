@@ -323,3 +323,17 @@ def update(user_id:int,update:Todo):
             return update
     return {"message":"error not found"}
 
+from fastapi import FastAPI
+from pydantic import BaseModel
+class self(BaseModel):
+    name:str
+    age:int
+intro=[]
+app=FastAPI()
+@app.post("/data")
+def create_user(user:self):
+    intro.append(user)
+    return user
+@app.get("/data")
+def get_data():
+    return intro
