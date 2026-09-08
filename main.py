@@ -319,3 +319,7 @@ def check(user_id:int):
 def update(user_id:int,update:Todo):
     for index,todo in enumerate(todos):
         if todo.id==user_id:
+            todos[index]=update
+            return update
+    return {"message":"error not found"}
+
