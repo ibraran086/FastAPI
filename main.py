@@ -345,3 +345,31 @@ def put_data(data_id:int,update:self):
             intro[index]=update
             return update
     return {"message":"not update"}
+
+from fastapi import FastAPI
+from pydantic import BaseModel
+users=[]
+app=FastAPI()
+class user(BaseModel):
+    name:str
+    age:int
+@app.post("/user")
+def get_post(user:user):
+    users.append(user)
+    return {
+        "message":"your data paste in",
+        "data":user
+    }
+@app.get("/user")
+def get_user():
+    return users
+@app.put("/user/{user_id}")
+def get_put(user_id:int,user:user,notify:bool=False):
+    if user_id<len(users):
+        users[user_id]=user
+        return {
+            "message":"user updated",
+            "notify":notify,
+            "data":user
+        }
+    return {"message":"data not found"}
