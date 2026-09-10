@@ -373,3 +373,42 @@ def get_put(user_id:int,user:user,notify:bool=False):
             "data":user
         }
     return {"message":"data not found"}
+from fastapi import FastAPI
+from pydantic import BaseModel
+app=FastAPI()
+database=[]
+class User(BaseModel):
+    id:int
+    name:str
+    age:int
+    data:bool
+@app.post("/users")
+def user_data(user:User):
+    database.append(user)
+    return {
+        "message":"your data is fetched",
+        "data":user
+    }
+@app.get("/users")
+def get_user():
+    return database
+@app.get("/users/{user_id}")
+def check_id(user_id:int):
+    for data in database:
+        if user_id==data.id:
+            return data
+    return {"message":"error not found"}
+@app.put("/users/{user_id}")
+def get_put(user_id:int,updated:User):
+    for index,data in enumerate(database):
+        if data.id==user_id:
+            database[index]=updated
+            return updated
+    return {"message":"error not found"}
+@app.delete("/users/{user_id}")
+def delete_data(user_id:int):
+    for index,data in enumerate(database):
+        if data.id==user_id:
+            database.pop(index)
+            return database
+    return {"message":"data not found"}
