@@ -412,3 +412,44 @@ def delete_data(user_id:int):
             database.pop(index)
             return database
     return {"message":"data not found"}
+
+from fastapi import FastAPI
+from pydantic import BaseModel
+class Todo(BaseModel):
+    id:int
+    name:str
+    age:int
+    data:bool
+database=[]
+app=FastAPI()
+@app.post("/user")
+def get_post(todo:Todo):
+    database.append(todo)
+    return{
+        "message":"your data is",
+        "data":todo
+    }
+@app.get("/user")
+def data_get():
+    return database
+@app.get("/user/{user_id}")
+def check(user_id:int):
+    for data in database:
+        if data.id==user_id:
+            return data
+    return {"message":"data not found"}
+@app.put("/user/{user_id}")
+def put_get(user_id:int,updated_data:Todo):
+    for index,data in enumerate(database):
+        if data.id==user_id:
+            database[index]=updated_data
+            return updated_data
+    return {"message":"data not found"}
+@app.delete("/user/{user_id}")
+def delete(user_id:int):
+    for index,data in enumerate(database):
+        if data.id==user_id:
+            database.pop(index)
+            return {"message":"data deleted"}
+    return {"message":"data not found"}
+
