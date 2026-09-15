@@ -525,3 +525,47 @@ def get_put(user_id:int,d1:user,notify:bool=False):
             "notify":notify
         }
     return {"message":"data not found"}
+from fastapi import FastAPI
+app=FastAPI()
+database=[]
+from pydantic import BaseModel
+class user(BaseModel):
+    name:str
+    age:int
+    password:str
+class UserResponse(BaseModel):
+    name:str
+    age:int
+@app.get("/data",response_model=UserResponse)
+def get_data():
+    return {
+        "name":"ibrar",
+        "age":26,
+        "password":"123456"
+    }
+from fastapi import FastAPI, status ,HTTPException
+app=FastAPI()
+@app.post("/create_user",status_code=status.HTTP_201_CREATED)
+def create_user():
+    return {"message":"user_created"}
+@app.get("/user")
+def create_user():
+    return {
+        "status":"sucess",
+        "message":"User Fetched",
+        "data":{
+            "name":"ibrar",
+            "age":26
+        }
+    }
+@app.get("/user/{user_id}")
+def create_user(user_id:int):
+    if user_id!=1:
+        raise HTTPException(
+            status_code=404,
+            detail="user not found"
+        )
+    return {
+        "name":"ibrar",
+        "age":26
+    }
