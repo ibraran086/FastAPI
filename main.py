@@ -491,3 +491,37 @@ def delete(user_id:int):
         return Students
     else:
         return {"message":"data not found"}
+
+from fastapi import FastAPI
+from pydantic import BaseModel
+app=FastAPI()
+combine=[]
+class user(BaseModel):
+    name:str
+    age:int
+@app.post("/users")
+def get_post(data:user):
+    combine.append(data)
+    return {
+        "message":"your data is",
+        "data":data
+    }
+@app.get("/users")
+def get_fun():
+    return combine
+@app.get("/users/{user_id}")
+def check(user_id:int):
+    if 0<=user_id<len(combine):
+        return combine[user_id]
+    else:
+        return {"message":"data not found"}
+@app.put("/users/{user_id}")
+def get_put(user_id:int,d1:user,notify:bool=False):
+    if user_id<len(combine):
+        combine[user_id]=d1
+        return {
+            "message":"updated data",
+            "data":d1,
+            "notify":notify
+        }
+    return {"message":"data not found"}
