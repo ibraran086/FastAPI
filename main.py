@@ -608,3 +608,29 @@ def delete_user(user_id:int):
             list.pop(index)
             return list
     return {"message":"data not found"}
+#combine api
+from fastapi import FastAPI
+from pydantic import BaseModel
+app=FastAPI()
+database=[]
+class user(BaseModel):
+    name:str
+    age:int
+
+@app.post("/users")
+def get_post(data:user):
+    database.append(data)
+    return data
+@app.get("/users")
+def get_data():
+    return database
+@app.put("/users/{user_id}")
+def get_put(user_id:int,data:user,notify:bool=False):
+    if user_id<len(database):
+        database[user_id]=data
+        return {
+            "message":"data updated",
+            "notify":notify,
+            "data":data
+        }
+    return {"message":"user not found"}
