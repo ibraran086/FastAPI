@@ -569,3 +569,42 @@ def create_user(user_id:int):
         "name":"ibrar",
         "age":26
     }
+from fastapi import FastAPI
+from pydantic import BaseModel
+app=FastAPI()
+list=[]
+class todo(BaseModel):
+    id:int
+    name:str
+    data:bool
+@app.post("/users")
+def get_post(user_data:todo):
+    list.append(user_data)
+    return{
+        "message":"your data is",
+        "data":user_data
+    }
+@app.get("/users")
+def get():
+    return list
+@app.get("/users/{user_id}")
+def check_data(user_id:int):
+    for data in list:
+        if data.id==user_id:
+            return data
+    return {"message":"data not found"}
+@app.put("/users/{user_id}")
+def put_user(user_id:int,updated_user:todo):
+    for index,data in enumerate(list):
+        if data.id==user_id:
+            list[index]=updated_user
+            return updated_user
+
+    return {"message":"data not found"}
+@app.delete("/users/{user_id}")
+def delete_user(user_id:int):
+    for index,data in enumerate(list):
+        if data.id==user_id:
+            list.pop(index)
+            return list
+    return {"message":"data not found"}
