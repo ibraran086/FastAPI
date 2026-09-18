@@ -634,3 +634,31 @@ def get_put(user_id:int,data:user,notify:bool=False):
             "data":data
         }
     return {"message":"user not found"}
+from fastapi import FastAPI
+from pydantic import BaseModel
+app=FastAPI()
+data_list=[]
+class users(BaseModel):
+    name:str
+    age:int
+@app.post("/user")
+def post(user:users):
+    data_list.append(user)
+    return {
+        "message":"user data is",
+        "data":user
+    }
+@app.get("/user")
+def get_data():
+    return data_list
+@app.put("/user/{user_id}")
+def get_put(user_id:int,user:users,notify:bool=False):
+    if 0<=user_id<len(data_list):
+        data_list[user_id]=user
+        return {
+            "message":"data updated",
+            "user_id":user_id,
+            "user":user,
+            "notify":notify
+        }
+    return {"messag":"data not found"}
