@@ -679,3 +679,16 @@ def get_user():
         "age":26,
         "password":123456
     }
+from fastapi import FastAPI,status
+from pydantic import BaseModel
+app=FastAPI()
+class users(BaseModel):
+    name:str
+    age:int
+    data:bool
+@app.post("/user",status_code=status.HTTP_201_CREATED)
+def get_users(user:users):
+    return {
+        "message":"data updated",
+        "data":user
+    }
