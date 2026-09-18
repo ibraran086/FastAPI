@@ -692,3 +692,10 @@ def get_users(user:users):
         "message":"data updated",
         "data":user
     }
+from fastapi import FastAPI,status
+app=FastAPI()
+@app.post("/users",status_code=status.HTTP_201_CREATED)
+def get():
+    return {
+        "message":"data updated"
+    }
