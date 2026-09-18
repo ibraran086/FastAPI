@@ -662,3 +662,20 @@ def get_put(user_id:int,user:users,notify:bool=False):
             "notify":notify
         }
     return {"messag":"data not found"}
+from fastapi import FastAPI
+from pydantic import BaseModel
+app=FastAPI()
+class users(BaseModel):
+    name:str
+    age:int
+    password:str
+class responseModel(BaseModel):
+    name:str
+    age:int
+@app.get("/users",response_model=responseModel)
+def get_user():
+    return {
+        "name":"Ibrar",
+        "age":26,
+        "password":123456
+    }
