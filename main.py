@@ -715,3 +715,16 @@ def get_user(user_id:int):
         "id":1,
         "name":"ibrar"
     }
+from fastapi import FastAPI,status
+from pydantic import BaseModel
+app=FastAPI()
+list=[]
+class todo(BaseModel):
+    name:str
+    age:int
+@app.post("/user",status_code=status.HTTP_201_CREATED)
+def get_post(data:todo):
+    return {
+        "message":"data posted",
+        "data":data
+    }
