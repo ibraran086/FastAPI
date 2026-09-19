@@ -715,7 +715,7 @@ def get_user(user_id:int):
         "id":1,
         "name":"ibrar"
     }
-from fastapi import FastAPI,status
+from fastapi import FastAPI,status,HTTPException
 from pydantic import BaseModel
 app=FastAPI()
 list=[]
@@ -732,3 +732,15 @@ def get_post(data:todo):
 @app.get("/user")
 def data():
     return list
+@app.get("/user/{user_id}")
+def fun(user_id:int):
+    if user_id!=1:
+        raise HTTPException(
+            status_code=404,
+            detail="data not found"
+        )
+    return {
+        "message":"data updated",
+        "name":"ibrar munir",
+        "age":26
+    }
