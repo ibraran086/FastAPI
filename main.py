@@ -724,7 +724,11 @@ class todo(BaseModel):
     age:int
 @app.post("/user",status_code=status.HTTP_201_CREATED)
 def get_post(data:todo):
+    list.append(data)
     return {
         "message":"data posted",
         "data":data
     }
+@app.get("/user")
+def data():
+    return list
