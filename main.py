@@ -818,3 +818,26 @@ def get_user(name:str,balance:int):
         "name":"IBRAR",
         "balance":10000
     }
+from fastapi import FastAPI,Request
+from fastapi.responses import JSONResponse
+app=FastAPI()
+class Usernotfound(Exception):
+    def __init__(self,name:str,age:int):
+        self.name=name
+        self.age=age
+@app.exception_handler(Usernotfound)
+def user(request:Request,exc:Usernotfound):
+    return JSONResponse(
+        status_code=404,
+        content={
+            "data":f"user {exc.name} not found",
+            "data2":f"user {exc.age} not found",
+        }
+    )
+@app.get("/user/{name}")
+def get_user(name:str,age:int):
+    if name!="IBRAR":
+        raise Usernotfound(name,age)
+    if age<=26:
+        raise Usernotfound(name,age)
+    return name,age
