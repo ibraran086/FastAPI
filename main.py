@@ -766,3 +766,55 @@ def get_user(name:str):
     return{
         "NAME":name
     }
+from fastapi import FastAPI,Request
+from fastapi.responses import JSONResponse
+app=FastAPI()
+#exception
+class Datanotfound(Exception):
+    def __init__(self,name:str,data:bool):
+        self.name=name
+        self.data=data
+#handler
+@app.exception_handler(Datanotfound)
+def get_data(request:Request,exc:Datanotfound):
+    return JSONResponse (
+        status_code=404,
+        content={
+            "message":f"user {exc.name} not found"
+        }
+    )
+#router
+@app.get("/user/{name}")
+def get_user(name:str):
+    if name!="Ibrar":
+        raise Datanotfound(name,data=False)
+    return {
+        "name":name,
+        "data":True
+    }
+from fastapi import FastAPI,HTTPException,Request
+from fastapi.responses import JSONResponse
+app=FastAPI()
+class Insufficient(Exception):
+    def __init__ (self,name:str,balance:int):
+        self.name=name
+        self.balance=balance
+@app.exception_handler(Insufficient)
+def get_data(request:Request,exc:Insufficient):
+    return JSONResponse (
+        status_code=404,
+        content={
+            "message":f"user {exc.name} not found",
+            "insufficient_balance":f"user {exc.balance} is less than."
+        }
+    )
+@app.get("/user/{name}")
+def get_user(name:str,balance:int):
+    if name!="IBRAR":
+        raise Insufficient (name,balance) 
+    if balance<10000:
+        raise Insufficient (name,balance)
+    return {
+        "name":"IBRAR",
+        "balance":10000
+    }
