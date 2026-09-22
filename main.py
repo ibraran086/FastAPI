@@ -841,3 +841,16 @@ def get_user(name:str,age:int):
     if age<=26:
         raise Usernotfound(name,age)
     return name,age
+from fastapi import FastAPI,Depends
+app=FastAPI()
+def fun():
+    return {
+        "name":"Ibrar",
+        "age":26
+    }
+@app.get("/user")
+def get_user(users=Depends(fun)):
+    return users
+@app.get("/profile")
+def get_profile(dashboard=Depends(fun)):
+    return dashboard
