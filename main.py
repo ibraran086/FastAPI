@@ -854,3 +854,20 @@ def get_user(users=Depends(fun)):
 @app.get("/profile")
 def get_profile(dashboard=Depends(fun)):
     return dashboard
+from fastapi import FastAPI,HTTPException,Header,Depends
+app=FastAPI()
+def verify_token(token:str=Header(None)):
+    if token!="mysecrettoken":
+        raise HTTPException (
+            status_code=401,
+            detail="unauthorized"
+        )
+    return {
+        "user":"Authorized user"
+    }
+@app.get("/secure_data")
+def secure_data(user=Depends(verify_token)):
+    return {
+        "message":"secure data accessed",
+        "user":user
+    }
