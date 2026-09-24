@@ -871,3 +871,20 @@ def secure_data(user=Depends(verify_token)):
         "message":"secure data accessed",
         "user":user
     }
+from fastapi import FastAPI,Header,HTTPException,Depends
+app=FastAPI()
+def token(token:str=Header(None)):
+    if token!="mysecrttoken":
+        raise HTTPException(
+            status_code=401,
+            detail="unauthorized"
+    )
+    return {
+        "user":"Authorized"
+    }
+@app.get("/serure_data")
+def secure_data(user=Depends(token)):
+    return {
+        "message":"secure data accessed",
+        "user":user
+    }
