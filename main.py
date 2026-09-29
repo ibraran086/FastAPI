@@ -906,3 +906,13 @@ async def log_middleware(request:Request,call_next):
     process_time=time.time()-start_time
     print(f"Path:{request.url.path}| Time:{process_time}")
     return response
+from fastapi import FastAPI,Request
+import time
+app=FastAPI()
+@app.middleware("http")
+async def middle_ware(request:Request,next_call):
+    start_time=time.time()
+    response=await next_call(request)
+    process_time=time.time()-start_time
+    print(f"Path{request.url.path}| Time:{process_time}")
+    return response
