@@ -916,3 +916,36 @@ async def middle_ware(request:Request,next_call):
     process_time=time.time()-start_time
     print(f"Path{request.url.path}| Time:{process_time}")
     return response
+from fastapi import FastAPI
+app=FastAPI()
+import sqlite3
+conn=sqlite3.connect("test.db",check_same_thread=False)
+cursor=conn.cursor()
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS todos (
+        id INTEGER PRIMERY KEY,
+        text TEXT,
+        completed TEXT    
+    )
+""")
+conn.commit()
+@app.get("/")
+def home():
+    return {
+        "message":"SQLITE Connected Fine"
+    }
+from fastapi import FastAPI
+app=FastAPI()
+import sqlite3
+conn=sqlite3.connect("record.db",check_same_thread=False)
+cursor=conn.cursor()
+cursor.execute("""CREATE TABLE IF NOT EXISTS data (
+        id INTEGER PREMERY KEY,
+        text TEXT,
+        completed TEXT
+    )
+""")
+conn.commit()
+@app.get("/user")
+def get_user(user:str):
+    return user
