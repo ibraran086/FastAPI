@@ -940,7 +940,7 @@ import sqlite3
 conn=sqlite3.connect("record.db",check_same_thread=False)
 cursor=conn.cursor()
 cursor.execute("""CREATE TABLE IF NOT EXISTS data (
-        id INTEGER PREMERY KEY,
+        id INTEGER PRIMARY KEY,
         text TEXT,
         completed TEXT
     )
