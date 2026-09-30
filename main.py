@@ -973,5 +973,5 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS data_table(
 """)
 conn.commit()
 @app.get("/users")
-def get_users(user:users):
-    return user
+def get_users(users:str):
+    return users
