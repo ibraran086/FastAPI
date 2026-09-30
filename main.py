@@ -959,3 +959,19 @@ async def middle_ware(request:Request,call_next):
     process_time=time.time()-start_time
     print(f"Path:{request.url.path}| Time:{process_time}")
     return response
+from fastapi import FastAPI
+import sqlite3
+app=FastAPI()
+conn=sqlite3.connect("data.db",check_same_thread=False)
+cursor=conn.cursor()
+cursor.execute("""CREATE TABLE IF NOT EXISTS data_table(
+    id INTEGER PRIMARY KEY,
+    name TEXT,
+    age INTEGER,
+    data BOOLIAN
+    )
+""")
+conn.commit()
+@app.get("/users")
+def get_users(user:users):
+    return user
