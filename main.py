@@ -975,3 +975,20 @@ conn.commit()
 @app.get("/users")
 def get_users(users:str):
     return users
+
+from fastapi import FastAPI,Request
+import sqlite3
+app=FastAPI()
+conn=sqlite3.connect("todo.db",check_same_thread=False)
+cursor=conn.cursor()
+cursor.execute ("""CREATE TABLE IF NOT EXISTS student(
+    id INTEGER PRIMARY KEY,
+    name TEXT,
+    roll_no TEXT,
+    result TEXT
+    )
+        """)
+conn.commit()
+@app.get("/student")
+def get_students(student:str):
+    return student
